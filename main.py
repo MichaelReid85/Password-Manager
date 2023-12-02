@@ -4,6 +4,25 @@ from tkinter import *
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
+
+def save():
+    website = web_input.get()
+    email = email_input.get()
+    password = pw_input.get()
+
+    with open("data.txt", "a") as data_file:
+        data_file.write(f"{website} | {email} | {password}\n")
+        web_input.delete(0, END)
+        pw_input.delete(0, END)
+
+
+# Write to the data inside the entries to a data.txt file when the Add button is clicked
+
+# Each website, email, and password combination should be on a new line inside the file.
+
+# All fields need to be cleared after Add button is pressed
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()
@@ -26,13 +45,15 @@ pw_text.grid(row=3, column=0, sticky="E")
 # Entries
 web_input = Entry(width=35)
 web_input.grid(row=1, column=1, columnspan=2, sticky="EW")
+web_input.focus()
 email_input = Entry(width=35)
 email_input.grid(row=2, column=1, columnspan=2, sticky="EW")
+email_input.insert(0, "email@something.com")
 pw_input = Entry(width=21)
 pw_input.grid(row=3, column=1, sticky="EW")
 
 # Buttons
-add_btn = Button(text="Add",  bg="white", width=35)
+add_btn = Button(text="Add",  bg="white", width=35, command=save)
 add_btn.grid(row=4, column=1, columnspan=2, sticky="EW")
 pw_gen = Button(text="Generate Password", bg="white")
 pw_gen.grid(row=3, column=2, sticky="EW")
