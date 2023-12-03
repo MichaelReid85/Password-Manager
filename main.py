@@ -60,6 +60,24 @@ def save():
             pw_input.delete(0, END)
 
 
+# ---------------------------- SEARCH ------------------------------- #
+
+def find_password():
+    website = web_input.get()
+    try:
+        with open("data.json") as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No Data File Found.")
+    else:
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=website, message=f"Email: {email}\nPassword: {password}")
+        else:
+            messagebox.showinfo(title="Error", message=f"No details for {website} exists.")
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()
@@ -68,7 +86,7 @@ window.config(padx=50, pady=50, bg="dim gray")
 
 canvas = Canvas(width=300, height=300, bg="dim grey", highlightthickness=0)
 logo_img = PhotoImage(file="logo.png")
-canvas.create_image(130, 150, image=logo_img)
+canvas.create_image(150, 150, image=logo_img)
 canvas.grid(row=0, column=1)
 
 # Labels
@@ -95,6 +113,8 @@ add_btn = Button(text="Add", bg="lime green", width=35, font=("Ariel", 13, "bold
 add_btn.grid(row=4, column=1, columnspan=2, sticky="EW")
 pw_gen = Button(text="Generate Password", bg="red", font=("Ariel", 13, "bold"), command=generate_password)
 pw_gen.grid(row=3, column=2, sticky="EW")
+search = Button(text="Search", bg="cyan", font=("Ariel", 13, "bold"), command=find_password)
+search.grid(row=1, column=2, sticky="EW")
 
 
 window.mainloop()
